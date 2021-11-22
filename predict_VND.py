@@ -5,9 +5,9 @@ import numpy as np
 import cv2
 import tensorflow as tf
 
-model = tf.keras.models.load_model('model\my_model_checkpoint_Den2.h5')
+model = tf.keras.models.load_model('my_model_checkpoint_Den_newdata.h5')
 model.compile(optimizer=tf.keras.optimizers.Adam(),
-              loss='sparse_categorical_crossentropy',
+              loss='categorical_crossentropy',
               metrics=['accuracy'])
 money_type = ['1000', '10000', '100000', '2000', '20000', '200000', '5000', '50000', '500000']
 

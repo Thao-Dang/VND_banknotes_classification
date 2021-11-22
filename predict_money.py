@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import tensorflow as tf
 
-model = tf.keras.models.load_model('model\my_model_checkpoint_Den_newdata.h5')
+model = tf.keras.models.load_model('my_model_checkpoint_Den_newdata.h5')
 model.compile(optimizer=tf.keras.optimizers.Adam(),
               loss='categorical_crossentropy',
               metrics=['accuracy'])
