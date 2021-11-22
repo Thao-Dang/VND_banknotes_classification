@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import tensorflow as tf
 
-model = tf.keras.models.load_model('model\my_model_checkpoint_Den2.h5')
+model = tf.keras.models.load_model('model\my_model_checkpoint_Den_newdata.h5')
 model.compile(optimizer=tf.keras.optimizers.Adam(),
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
@@ -15,21 +15,7 @@ st.header('PREDICT VIETNAMESE DONG')
 menu = ['upload a photo', 'take photo by webcam']
 choice = st.sidebar.selectbox('Ways to input image', menu)
 
-if choice == 'Upload a photo':
-    image_upload = st.file_uploader('upload file', type = ['jpg', 'png', 'jpeg'])
-    if image_upload != None:
-        image_np = np.asarray(bytearray(image_upload.read()),dtype = np.uint8)
-        img = cv2.imdecode(image_np,1)
-        img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-        img = cv2.resize(img, (224,224))
-        img = np.expand_dims(img, axis=0)
-        prediction = model.predict(img)
-        index = np.argmax(prediction[0])
-        money = money_type[index]
-        st.image(image_upload)
-        st.write('This is:', money, 'VND')
-
-elif choice == 'Take photo by webcam':
+if choice == 'Take photo by webcam':
     st.write('Click on "Capture" button')
     cam = cv2.VideoCapture(0) # device 0. If not work, try with 1 or 2
     capture_button = st.checkbox('Capture')
@@ -57,3 +43,18 @@ elif choice == 'Take photo by webcam':
     index = np.argmax(prediction[0])
     money = money_type[index]
     st.write('This is:', money, 'VND')
+
+elif choice == 'Upload a photo':
+    image_upload = st.file_uploader('upload file', type = ['jpg', 'png', 'jpeg'])
+    if image_upload != None:
+        image_np = np.asarray(bytearray(image_upload.read()),dtype = np.uint8)
+        img = cv2.imdecode(image_np,1)
+        img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+        img = cv2.resize(img, (224,224))
+        img = np.expand_dims(img, axis=0)
+        prediction = model.predict(img)
+        index = np.argmax(prediction[0])
+        money = money_type[index]
+        st.image(image_upload)
+        st.write('This is:', money, 'VND')
+
